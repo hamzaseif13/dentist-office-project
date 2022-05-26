@@ -1,5 +1,6 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Patient {
@@ -11,14 +12,14 @@ public class Patient {
     private String email;
     private List<Visit> previousVisits;
 
-    public Patient(String name, int ID, int phoneNumber, double owedBalance, double totalPaid, String email, List<Visit> previousVisits) {
+    public Patient(String name, int ID, int phoneNumber , String email) {
         this.name = name;
         this.ID = ID;
         this.phoneNumber = phoneNumber;
-        this.owedBalance = owedBalance;
-        this.totalPaid = totalPaid;
+        this.owedBalance = 0;
+        this.totalPaid = 0;
         this.email = email;
-        this.previousVisits = previousVisits;
+        previousVisits=new ArrayList<Visit>();
     }
 
     public String getName() {
@@ -75,5 +76,17 @@ public class Patient {
 
     public void setPreviousVisits(List<Visit> previousVisits) {
         this.previousVisits = previousVisits;
+    }
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "name='" + name + '\'' +
+                ", ID=" + ID +
+                ", phoneNumber=" + phoneNumber +
+                ", owedBalance=" + owedBalance +
+                ", totalPaid=" + totalPaid +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 public class Doctor {
     private String name;
     private Week workingSchedule;
-    private List<Appointment> appointments;
+    private final List<Appointment> appointments;
 
     public Doctor(String name, Week workingSchedule) {
         this.name = name;
