@@ -12,7 +12,8 @@ public class Main {
         ramzi.addAppointment(new Appointment(1,LocalTime.of(11,0),
                 LocalTime.of(12,0), LocalDate.of(2022,5,26)));
         System.out.println(ramzi);
-        //hi
-        //lol
+    //test
+
+        //ttt
     }
 }
