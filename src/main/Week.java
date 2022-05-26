@@ -35,14 +35,14 @@ public class Week {
 
     @Override
     public String toString() {
-       String x ="";
-       if(sun)x+="Sun\n";
-        if(mon)x+="Mon\n";
-        if(tue)x+="Tue\n";
-        if(wed)x+="Wed\n";
-        if(thu)x+="Thu\n";
-        if(fri)x+="Fri\n";
-        if(sat)x+="Sat\n";
+       String x ="Work days: ";
+       if(sun)x+="Sun ";
+        if(mon)x+="Mon ";
+        if(tue)x+="Tue ";
+        if(wed)x+="Wed ";
+        if(thu)x+="Thu ";
+        if(fri)x+="Fri ";
+        if(sat)x+="Sat ";
         return x;
     }
 }

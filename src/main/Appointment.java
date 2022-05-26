@@ -9,13 +9,14 @@ public class Appointment {
     private LocalTime startTime;
     private LocalDate date;
 
+
     public Appointment(int patientID, LocalTime endTime, LocalTime startTime, LocalDate date) {
         this.patientID = patientID;
         this.endTime = endTime;
         this.startTime = startTime;
         this.date = date;
-    }
 
+    }
     public int getPatientID() {
         return patientID;
     }
@@ -46,5 +47,12 @@ public class Appointment {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "patient id:"+patientID+" | date "+date.toString()+" "+date.getDayOfWeek().toString()+
+                " | start time "+startTime.toString()+" | end time "+endTime.toString()+"";
     }
 }

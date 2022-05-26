@@ -1,5 +1,6 @@
 package main;
 
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,14 +42,33 @@ public class Doctor {
         }
         return this;
     }
-    public void printAppointments(){
-
+    public String getAppointmentsString(){
+        String y="\nAppointments : \n";
+        for(Appointment appointment : appointments){
+            y+=appointment.toString()+"\n";
+        }
+        return y;
+    }
+    public  void removeEntireSchedule(Doctor doctor){
+        this.getAppointments().clear();
+    }
+    /**
+    * removes all appointments for a certain date
+    * @params day day you want to cancel appointments on
+    */
+    public void removeAppointmentsAtDay(DayOfWeek day){
+        for(Appointment appointment:getAppointments()){
+            if(appointment.getDate().getDayOfWeek()== day){
+                getAppointments().remove(appointment);
+            }
+        }
     }
     @Override
     public String toString() {
-        return "------------------------------\n"+
+        return "\n------------------------------\n"+
                 this.name+"\nstart time "+workingSchedule.getStartTime()+" | end time "+
-                workingSchedule.getEndTime()+" \n"+this.workingSchedule+
+                workingSchedule.getEndTime()+" \n"+workingSchedule+getAppointmentsString()+"\n"+
                 "------------------------------";
+
     }
 }
