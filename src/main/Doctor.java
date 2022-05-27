@@ -57,11 +57,12 @@ public class Doctor {
     * @params day day you want to cancel appointments on
     */
     public void removeAppointmentsAtDay(DayOfWeek day){
+        /*
         for(Appointment appointment:getAppointments()){
-            if(appointment.getDate().getDayOfWeek()== day){
+            if(appointment.getDay().g()== day){
                 getAppointments().remove(appointment);
             }
-        }
+        }*/
     }
     @Override
     public String toString() {

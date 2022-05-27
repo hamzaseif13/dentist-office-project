@@ -1,5 +1,6 @@
 package main;
 
+import java.time.DayOfWeek;
 import java.time.LocalTime;
 
 public class Week {
@@ -36,7 +37,7 @@ public class Week {
     @Override
     public String toString() {
        String x ="Work days: ";
-       if(sun)x+="Sun ";
+        if(sun)x+="Sun ";
         if(mon)x+="Mon ";
         if(tue)x+="Tue ";
         if(wed)x+="Wed ";

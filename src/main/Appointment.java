@@ -1,5 +1,6 @@
 package main;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -7,14 +8,14 @@ public class Appointment {
     private int patientID;
     private LocalTime endTime;
     private LocalTime startTime;
-    private LocalDate date;
+    private DayOfWeek day;
 
 
-    public Appointment(int patientID, LocalTime endTime, LocalTime startTime, LocalDate date) {
+    public Appointment(int patientID, LocalTime startTime, LocalTime endTime, DayOfWeek day) {
         this.patientID = patientID;
         this.endTime = endTime;
         this.startTime = startTime;
-        this.date = date;
+        this.day = day;
 
     }
     public int getPatientID() {
@@ -41,18 +42,18 @@ public class Appointment {
         this.startTime = startTime;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public DayOfWeek getDay() {
+        return day;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setDay(DayOfWeek day) {
+        this.day = day;
     }
 
     @Override
     public String toString() {
         return
-                "patient id:"+patientID+" | date "+date.toString()+" "+date.getDayOfWeek().toString()+
+                "patient id:"+patientID+" | date "+ day.toString()+" "+ day.toString()+
                 " | start time "+startTime.toString()+" | end time "+endTime.toString()+"";
     }
 }
