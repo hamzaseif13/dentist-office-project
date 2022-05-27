@@ -57,6 +57,7 @@ public class Main {
 
 
     public static void receiveDoctor() throws IOException {
+        int doctorId = inputStream.readInt();
         String docName = inputStream.readUTF();
         String docDays = inputStream.readUTF();
         String docStartTime = inputStream.readUTF();
@@ -65,7 +66,7 @@ public class Main {
         String[] end = docEndTime.split(":");
         Week week = new WeekBuilder(LocalTime.of(Integer.parseInt(start[0]), Integer.parseInt(start[1])), LocalTime.of(Integer.parseInt(end[0]), Integer.parseInt(end[1]))).setSun(docDays.contains("sun")).setMon(docDays.contains("mon")).setTue(docDays.contains("tue")).setWed(docDays.contains("wed")).setThu(docDays.contains("thu")).setFri(docDays.contains("fri")).setSat(docDays.contains("sat")).build();
 
-        doctors.add(new Doctor(docName, week));
+        doctors.add(new Doctor(docName, week,doctorId));
 
     }
 
@@ -74,6 +75,7 @@ public class Main {
     }
 
     public static void receiveAppointments() throws IOException {
+        int doctorId = inputStream.readInt();
         int patientId = inputStream.readInt();
         String startTime = inputStream.readUTF();
         String endTime = inputStream.readUTF();
@@ -104,9 +106,34 @@ public class Main {
                 day = DayOfWeek.SATURDAY;
                 break;
         }
-        appointments.add(new Appointment(patientId, start, end, day));
+        /*
+        for (Doctor doc:doctors){
+            if(doc.getId()==doctorId){
+                if( validate(new Appointment(patientId, start, end, day)))
+                doc.addAppointment(new Appointment(patientId, start, end, day));
+                else{
+
+                }
+            }
+        }
+
+         */
     }
 
+/*
+* function checkInterSection(sec1, sec2) {
+  if (sec1.start == sec2.start) {
+    return true;
+  }
+  if (sec1.start < sec2.start) {
+    if (sec1.end > sec2.start) return true;
+    else if (sec1.end <= sec2.start) return false;
+  } else if (sec1.start > sec2.start) {
+    if (sec2.end > sec1.start) return true;
+    else if (sec2.end <= sec1.start) return false;
+  }
+}
+* */
     public static void printAllDatabase() {
         doctors.forEach(doctor -> System.out.println(doctor));
         patients.forEach(patient -> System.out.println(patient));

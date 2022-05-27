@@ -53,7 +53,7 @@ public class Appointment {
     @Override
     public String toString() {
         return
-                "patient id:"+patientID+" | date "+ day.toString()+" "+ day.toString()+
+                "patient id:"+patientID+" | date "+ day.toString()+" "+
                 " | start time "+startTime.toString()+" | end time "+endTime.toString()+"";
     }
 }

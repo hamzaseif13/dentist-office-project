@@ -15,7 +15,9 @@ public class Client {
 
     public static void addDoctors() {
         try {
-
+            System.out.println("Enter a doctor Id");
+            int doctorId= scanner.nextInt();
+            scanner.nextLine();
             System.out.println("Enter a doctor name");
             String doctorName = scanner.nextLine();
 
@@ -29,6 +31,7 @@ public class Client {
             String doctorEndTime = scanner.nextLine();
 
             //sending name
+            outputStream.writeInt(doctorId);
             outputStream.writeUTF(doctorName);
             //sending days
             outputStream.writeUTF(doctorDays);
@@ -70,6 +73,9 @@ public class Client {
 
     public static void addAppointments() {
         try {
+            System.out.println("Enter Doctors's id :");
+            int doctorId = scanner.nextInt();
+            scanner.nextLine();
             System.out.println("Enter patient's id :");
             int patientId = scanner.nextInt();
             scanner.nextLine();
@@ -82,6 +88,7 @@ public class Client {
             System.out.println("enter patient's day appointment : ");
             String appointmentDay = scanner.nextLine();
             //IDApp
+            outputStream.writeInt(doctorId);
             outputStream.writeInt(patientId);
             //StartTimeApp
             outputStream.writeUTF(startTimeAppointment);

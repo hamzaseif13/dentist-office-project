@@ -21,7 +21,11 @@ public class Patient {
         this.email = email;
         previousVisits=new ArrayList<Visit>();
     }
+    @Override
+    protected void finalize()
+    {
 
+    }
     public String getName() {
         return name;
     }

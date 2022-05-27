@@ -9,10 +9,22 @@ public class Doctor {
     private Week workingSchedule;
     private final List<Appointment> appointments;
 
-    public Doctor(String name, Week workingSchedule) {
+
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
+    }
+
+    private int Id;
+    public Doctor(String name, Week workingSchedule,int Id) {
         this.name = name;
         this.workingSchedule = workingSchedule;
         this.appointments = new ArrayList<>() ;
+        this.Id=Id;
     }
 
     public String getName() {
