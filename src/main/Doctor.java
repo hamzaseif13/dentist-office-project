@@ -10,9 +10,6 @@ public class Doctor {
     private String name;
     private Week workingSchedule;
     private final List<Appointment> appointments;
-
-
-
     public int getId() {
         return Id;
     }
@@ -28,7 +25,6 @@ public class Doctor {
         this.appointments = new ArrayList<>() ;
         this.Id=Id;
     }
-
     public String getName() {
         return name;
     }
@@ -50,12 +46,7 @@ public class Doctor {
     public void cancelAppointment(){
         appointments.clear();
     }
-    public Doctor cancelAppointment(int indexOfDay){
-        for(Appointment appointment :appointments){
-          //
-        }
-        return this;
-    }
+
     public String getAppointmentsString(){
         String y="\nAppointments : \n";
         for(Appointment appointment : appointments){
@@ -63,22 +54,6 @@ public class Doctor {
         }
         return y;
     }
-    public  void removeEntireSchedule(Doctor doctor){
-        this.getAppointments().clear();
-    }
-    /**
-    * removes all appointments for a certain date
-    * @params day day you want to cancel appointments on
-    */
-    public void removeAppointmentsAtDay(DayOfWeek day){
-        /*
-        for(Appointment appointment:getAppointments()){
-            if(appointment.getDay().g()== day){
-                getAppointments().remove(appointment);
-            }
-        }*/
-    }
-    
     public void DeleteDay(List<DayOfWeek> list)
     {
         for (DayOfWeek Day : list) {
@@ -92,14 +67,55 @@ public class Doctor {
                 }
             }
         }
-        
         }
-        
     }
-    
-    
-    
-    
+    private boolean checkIntersection(Appointment first,Appointment second){
+        if(first.getDay()!=second.getDay()){
+            return false;
+        }
+        if(first.getStartTime()==second.getStartTime())return true;
+        if(first.getStartTime().isBefore(second.getStartTime())){
+            if(first.getEndTime().isAfter(second.getStartTime()))return true;
+            else return false;
+        }
+        else {
+            if(second.getEndTime().isAfter(first.getStartTime()))return true;
+            else return false;
+        }
+
+    }
+    public int validateAndAdd(Appointment appointmentcheck) {
+        DayOfWeek day;
+        if(appointmentcheck.getDay()==DayOfWeek.SUNDAY&&!workingSchedule.isSun()){
+            return 0;
+        }
+        else if(appointmentcheck.getDay()==DayOfWeek.MONDAY&&!workingSchedule.isMon()){
+            return 0;
+        }
+        else if(appointmentcheck.getDay()==DayOfWeek.TUESDAY&&!workingSchedule.isTue()){
+            return 0;
+        }
+        else if(appointmentcheck.getDay()==DayOfWeek.WEDNESDAY&&!workingSchedule.isWed()){
+            return 0;
+        }
+        else if(appointmentcheck.getDay()==DayOfWeek.THURSDAY&&!workingSchedule.isThu()){
+            return 0;
+        }
+        else if(appointmentcheck.getDay()==DayOfWeek.FRIDAY&&!workingSchedule.isFri()){
+            return 0;
+        }
+        else if(appointmentcheck.getDay()==DayOfWeek.SATURDAY&&!workingSchedule.isSat()){
+            return 0;
+        }
+        if(appointmentcheck.getStartTime().isBefore(workingSchedule.getStartTime())
+                ||appointmentcheck.getEndTime().isAfter(workingSchedule.getEndTime())){
+            return 3;
+        }
+        for(Appointment appointment:appointments){
+            if(checkIntersection(appointment,appointmentcheck))return 1;
+        }
+        return 2;
+    }
     @Override
     public String toString() {
         return "\n------------------------------\n"+

@@ -22,6 +22,13 @@ public class Main {
     static List<Patient> patients = new ArrayList<Patient>();
     static List<Appointment> appointments = new ArrayList<Appointment>();
 
+    public static void addFakeData(){
+        Week week = new WeekBuilder(LocalTime.of(8,30),LocalTime.of(16,30)).setSun(true).setMon(true).setTue(true).build();
+        Doctor doctor = new Doctor("D.Hala",week,1);
+        doctors.add(doctor);
+        Patient patient = new Patient("patient:hamza",1,432,"dsfdsf");
+        patients.add(patient);
+    }
     public static void main(String[] args) {
 
         try {
@@ -30,8 +37,12 @@ public class Main {
             outputStream = new DataOutputStream(receptions.getOutputStream());
             inputStream = new DataInputStream(receptions.getInputStream());
             yesOrNo = "";
+            /*
             receiveDoctor();
             receivePatient();
+             */
+            addFakeData();
+            outputStream.writeUTF(printAllDatabase());
             int choice=-1;
             while (choice != 5) {
                  choice = inputStream.readInt();
@@ -49,7 +60,6 @@ public class Main {
                     case 4:
                         DeleteAppointment();
                         break;
-
                 }
             }
             printAllDatabase();
@@ -68,9 +78,7 @@ public class Main {
         String[] start = docStartTime.split(":");
         String[] end = docEndTime.split(":");
         Week week = new WeekBuilder(LocalTime.of(Integer.parseInt(start[0]), Integer.parseInt(start[1])), LocalTime.of(Integer.parseInt(end[0]), Integer.parseInt(end[1]))).setSun(docDays.contains("sun")).setMon(docDays.contains("mon")).setTue(docDays.contains("tue")).setWed(docDays.contains("wed")).setThu(docDays.contains("thu")).setFri(docDays.contains("fri")).setSat(docDays.contains("sat")).build();
-
         doctors.add(new Doctor(docName, week,doctorId));
-
     }
 
     public static void receivePatient() throws IOException {
@@ -85,7 +93,6 @@ public class Main {
         String appointmentDay = inputStream.readUTF();
         LocalTime start = LocalTime.of(Integer.parseInt(startTime.split(":")[0]), Integer.parseInt(startTime.split(":")[1]));
         LocalTime end = LocalTime.of(Integer.parseInt(endTime.split(":")[0]), Integer.parseInt(endTime.split(":")[1]));
-        
         DayOfWeek day;
         switch (appointmentDay) {
             case "sun":
@@ -110,18 +117,23 @@ public class Main {
                 day = DayOfWeek.SATURDAY;
                 break;
         }
-        /*
+        Appointment appointment = new Appointment(patientId, start, end, day);
         for (Doctor doc:doctors){
             if(doc.getId()==doctorId){
-                if( validate(new Appointment(patientId, start, end, day)))
-                doc.addAppointment(new Appointment(patientId, start, end, day));
-                else{
-
+                if(doc.validateAndAdd(appointment)==2){
+                    outputStream.writeInt(2);
+                    doc.addAppointment(appointment);
                 }
+                else if(doc.validateAndAdd(appointment)==1)
+                    outputStream.writeInt(1);
+                else if(doc.validateAndAdd(appointment)==0)
+                    outputStream.writeInt(0);
+                else if(doc.validateAndAdd(appointment)==3)
+                    outputStream.writeInt(3);
             }
         }
 
-         */
+
     }
 
 /*
@@ -194,9 +206,17 @@ public class Main {
                 Doc.DeleteDay(list);
         }
     }
-    public static void printAllDatabase() {
-        doctors.forEach(doctor -> System.out.println(doctor));
-        patients.forEach(patient -> System.out.println(patient));
-        appointments.forEach(appointment -> System.out.println(appointment));
+    public static String printAllDatabase() {
+        String x="";
+        for(Doctor doc : doctors){
+            x+=doc.toString();
+            System.out.println(doc);
+        }
+        for(Patient pat : patients){
+            x+=pat.toString();
+            System.out.println(pat);
+        }
+       return x;
+
     }
 }

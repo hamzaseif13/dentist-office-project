@@ -1,5 +1,7 @@
 package client;
 
+import org.w3c.dom.ls.LSOutput;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -14,11 +16,57 @@ public class Client {
     public static DataInputStream inputStream;
     public static DataOutputStream outputStream;
     static public String yesOrNo = "";
+    static private String RED="\033[0;101m";
+    static private String GREEN="\033[0;102m";
+    static private String RESET="\033[0m";
+    public static void main(String[] args) {
+
+        try {
+            socket = new Socket("localhost", 5000);
+            scanner = new Scanner(System.in);
+            inputStream = new DataInputStream(socket.getInputStream());
+            outputStream = new DataOutputStream(socket.getOutputStream());
+            yesOrNo = "";
+            System.out.println(inputStream.readUTF());
+            int choice = -1;
+            while (choice != 5) {
+                System.out.println("what do you wanna do now ?");
+                System.out.println("1- add more doctors \n2- add more patients\n3- add appointments\n4- Delete an appointment\n5- leave the system");
+                choice = scanner.nextInt();
+                scanner.nextLine();
+                switch (choice) {
+                    case 1:
+                        outputStream.writeInt(1);
+                        addDoctors();
+                        break;
+                    case 2:
+                        outputStream.writeInt(2);
+                        addPatients();
+                        break;
+                    case 3:
+                        outputStream.writeInt(3);
+                        addAppointments();
+                        break;
+                    case 4:
+                        outputStream.writeInt(4);
+                        DeleteAppointment();
+                        break;
+                    default:
+                        outputStream.writeInt(5);
+                }
+            }
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
     public static void addDoctors() {
         try {
             System.out.println("Enter a doctor Id");
-            int doctorId= scanner.nextInt();
+            int doctorId = scanner.nextInt();
             scanner.nextLine();
             System.out.println("Enter a doctor name");
             String doctorName = scanner.nextLine();
@@ -86,7 +134,6 @@ public class Client {
 
             System.out.println("Enter patient's end time appointment : ex. 11:30");
             String endTimeAppointment = scanner.nextLine();
-
             System.out.println("enter patient's day appointment : ");
             String appointmentDay = scanner.nextLine();
             //IDApp
@@ -98,16 +145,25 @@ public class Client {
             outputStream.writeUTF(endTimeAppointment);
             //sending day
             outputStream.writeUTF(appointmentDay);
+            int result = inputStream.readInt();
+            switch (result){
+                case 0:
+                    System.out.println(RED+"the doctor doesn't have a work on this day"+RESET);break;
+                case 1:
+                    System.out.println(RED+"this time is already taken"+RESET);break;
+                case 2:
+                    System.out.println(GREEN+"appointment added successfully"+RESET);break;
+                case 3:
+                    System.out.println(RED+"appointment time is not in the doctor's schedule"+RESET);break;
+            }
         } catch (IOException exc) {
             System.out.println(exc);
         }
     }
-    
-    
-    public static void DeleteAppointment()
-    {
+
+    public static void DeleteAppointment() {
         try {
-                        
+
             System.out.println("Enter Doctors's id that you want to delete his appointments:, enter 0 to delete for all doctors ");
             int doctorId = scanner.nextInt();
             scanner.nextLine();
@@ -115,62 +171,12 @@ public class Client {
             System.out.println("enter patient's day appointment : enter a 0 to delete for all days ");
             String appointmentDay = scanner.nextLine();
             outputStream.writeUTF(appointmentDay);
-            
-            
-            
-            
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
+
 
     }
-    
-    
-
-    public static void main(String[] args) {
-
-        try {
-            socket = new Socket("localhost", 5000);
-            scanner = new Scanner(System.in);
-            inputStream = new DataInputStream(socket.getInputStream());
-            outputStream = new DataOutputStream(socket.getOutputStream());
-            yesOrNo = "";
-            addDoctors();
-            addPatients();
-            int choice = -1;
-
-            while (choice != 5) {
-                System.out.println("what do you wanna do next ?");
-                System.out.println("1- add more doctors \n2- add more patients\n3- add appointments\n4- Delete an appointment\n5- leave the system");
-                choice = scanner.nextInt();
-                scanner.nextLine();
-                switch (choice) {
-                    case 1:
-                        outputStream.writeInt(1);
-                        addDoctors();
-                        break;
-                    case 2:
-                        outputStream.writeInt(2);
-                        addPatients();
-                        break;
-                    case 3:
-                        outputStream.writeInt(3);
-                        addAppointments();
-                        break;
-                    case 4:
-                        outputStream.writeInt(4);
-                        DeleteAppointment();
-                        break;
-                    default:
-                        outputStream.writeInt(5);
-                }
-            }
 
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
 }

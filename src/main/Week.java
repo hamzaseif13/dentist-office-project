@@ -34,6 +34,34 @@ public class Week {
         this.endTime = endTime;
     }
 
+    public boolean isSun() {
+        return sun;
+    }
+
+    public boolean isMon() {
+        return mon;
+    }
+
+    public boolean isTue() {
+        return tue;
+    }
+
+    public boolean isWed() {
+        return wed;
+    }
+
+    public boolean isThu() {
+        return thu;
+    }
+
+    public boolean isFri() {
+        return fri;
+    }
+
+    public boolean isSat() {
+        return sat;
+    }
+
     @Override
     public String toString() {
        String x ="Work days: ";
