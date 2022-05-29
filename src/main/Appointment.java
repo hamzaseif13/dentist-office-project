@@ -9,7 +9,7 @@ public class Appointment {
     private LocalTime endTime;
     private LocalTime startTime;
     private DayOfWeek day;
-
+    
 
     public Appointment(int patientID, LocalTime startTime, LocalTime endTime, DayOfWeek day) {
         this.patientID = patientID;
@@ -49,6 +49,14 @@ public class Appointment {
     public void setDay(DayOfWeek day) {
         this.day = day;
     }
+    
+    
+    public void DeleteApp() throws Throwable{
+        this.finalize();
+    }
+    
+    
+    
 
     @Override
     public String toString() {

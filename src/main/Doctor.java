@@ -3,6 +3,8 @@ package main;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Doctor {
     private String name;
@@ -76,6 +78,28 @@ public class Doctor {
             }
         }*/
     }
+    
+    public void DeleteDay(List<DayOfWeek> list)
+    {
+        for (DayOfWeek Day : list) {
+        for (Appointment App : appointments) {
+            if(Day == App.getDay())
+            {
+                try {
+                    App.DeleteApp();
+                } catch (Throwable ex) {
+                    Logger.getLogger(Doctor.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        
+        }
+        
+    }
+    
+    
+    
+    
     @Override
     public String toString() {
         return "\n------------------------------\n"+

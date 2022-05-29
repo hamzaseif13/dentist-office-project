@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Client {
     public static Socket socket;
@@ -100,6 +102,32 @@ public class Client {
             System.out.println(exc);
         }
     }
+    
+    
+    public static void DeleteAppointment()
+    {
+        try {
+                        
+            System.out.println("Enter Doctors's id :");
+            int doctorId = scanner.nextInt();
+            scanner.nextLine();
+            outputStream.writeInt(doctorId);
+            
+            System.out.println("enter patient's day appointment : ");
+            String appointmentDay = scanner.nextLine();
+            outputStream.writeUTF(appointmentDay);
+            
+            
+            
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+
+    }
+    
+    
 
     public static void main(String[] args) {
 
@@ -113,9 +141,9 @@ public class Client {
             addPatients();
             int choice = -1;
 
-            while (choice != 4) {
+            while (choice != 5) {
                 System.out.println("what do you wanna do next ?");
-                System.out.println("1- add more doctors \n2- add more patients\n3- add appointments\n4- leave the system");
+                System.out.println("1- add more doctors \n2- add more patients\n3- add appointments\n4- Delete an appointment\n5- leave the system");
                 choice = scanner.nextInt();
                 scanner.nextLine();
                 switch (choice) {
@@ -131,8 +159,12 @@ public class Client {
                         outputStream.writeInt(3);
                         addAppointments();
                         break;
-                    default:
+                    case 4:
                         outputStream.writeInt(4);
+                        DeleteAppointment();
+                        break;
+                    default:
+                        outputStream.writeInt(5);
                 }
             }
 

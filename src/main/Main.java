@@ -42,10 +42,13 @@ public class Main {
                     case 2:
                         receivePatient();
                         break;
+                    
                     case 3:
                         receiveAppointments();
                         break;
-
+                    case 4:
+                        DeleteAppointment();
+                        break;
 
                 }
             }
@@ -82,6 +85,7 @@ public class Main {
         String appointmentDay = inputStream.readUTF();
         LocalTime start = LocalTime.of(Integer.parseInt(startTime.split(":")[0]), Integer.parseInt(startTime.split(":")[1]));
         LocalTime end = LocalTime.of(Integer.parseInt(endTime.split(":")[0]), Integer.parseInt(endTime.split(":")[1]));
+        
         DayOfWeek day;
         switch (appointmentDay) {
             case "sun":
@@ -134,6 +138,57 @@ public class Main {
   }
 }
 * */
+    
+    public static void DeleteAppointment() throws IOException
+    {
+        List<DayOfWeek> list = new ArrayList<DayOfWeek>();
+        int DocID = inputStream.readInt();
+        String Day = inputStream.readUTF();
+        String []arr = Day.split(" ");
+        String Sun = "Sun";
+        for (int i = 0; i < arr.length; i++) {
+            switch(arr[i].toUpperCase()){
+                case "SUN":
+                    list.add(DayOfWeek.SUNDAY);
+                    break;
+                case "MON":
+                    list.add(DayOfWeek.MONDAY);
+                    break;
+                case "TUE":
+                    list.add(DayOfWeek.TUESDAY);
+                    break;
+                case "WED":
+                    list.add(DayOfWeek.WEDNESDAY);
+                    break;
+                case "THU":
+                    list.add(DayOfWeek.THURSDAY);
+                    break;
+                case "FRI":
+                    list.add(DayOfWeek.FRIDAY);
+                    break;
+                case "Sat":
+                    list.add(DayOfWeek.SATURDAY);
+                    break;
+            }
+        //list.set(i, DayOfWeek.valueOf(arr[i]));
+        //list.add(DayOfWeek.valueOf(arr[i]));
+        }
+        for (Doctor Doc : doctors) {
+            if(Doc.getId() == DocID)
+                Doc.DeleteDay(list);
+        }
+        
+        
+        
+       
+       
+        
+    }
+    
+    
+    
+    
+    
     public static void printAllDatabase() {
         doctors.forEach(doctor -> System.out.println(doctor));
         patients.forEach(patient -> System.out.println(patient));
