@@ -33,7 +33,7 @@ public class Main {
             receiveDoctor();
             receivePatient();
             int choice=-1;
-            while (choice != 4) {
+            while (choice != 5) {
                  choice = inputStream.readInt();
                 switch (choice) {
                     case 1:
@@ -144,51 +144,56 @@ public class Main {
         List<DayOfWeek> list = new ArrayList<DayOfWeek>();
         int DocID = inputStream.readInt();
         String Day = inputStream.readUTF();
-        String []arr = Day.split(" ");
-        String Sun = "Sun";
-        for (int i = 0; i < arr.length; i++) {
-            switch(arr[i].toUpperCase()){
-                case "SUN":
-                    list.add(DayOfWeek.SUNDAY);
-                    break;
-                case "MON":
-                    list.add(DayOfWeek.MONDAY);
-                    break;
-                case "TUE":
-                    list.add(DayOfWeek.TUESDAY);
-                    break;
-                case "WED":
-                    list.add(DayOfWeek.WEDNESDAY);
-                    break;
-                case "THU":
-                    list.add(DayOfWeek.THURSDAY);
-                    break;
-                case "FRI":
-                    list.add(DayOfWeek.FRIDAY);
-                    break;
-                case "Sat":
-                    list.add(DayOfWeek.SATURDAY);
-                    break;
-            }
-        //list.set(i, DayOfWeek.valueOf(arr[i]));
-        //list.add(DayOfWeek.valueOf(arr[i]));
+        if(Day=="0"){
+            list.add(DayOfWeek.SATURDAY);
+            list.add(DayOfWeek.SUNDAY);
+            list.add(DayOfWeek.MONDAY);
+            list.add(DayOfWeek.TUESDAY);
+            list.add(DayOfWeek.THURSDAY);
+            list.add(DayOfWeek.WEDNESDAY);
+            list.add(DayOfWeek.FRIDAY);
         }
+        else{
+            String []arr = Day.split(" ");
+            String Sun = "Sun";
+            for (int i = 0; i < arr.length; i++) {
+                switch(arr[i].toUpperCase()){
+                    case "SUN":
+                        list.add(DayOfWeek.SUNDAY);
+                        break;
+                    case "MON":
+                        list.add(DayOfWeek.MONDAY);
+                        break;
+                    case "TUE":
+                        list.add(DayOfWeek.TUESDAY);
+                        break;
+                    case "WED":
+                        list.add(DayOfWeek.WEDNESDAY);
+                        break;
+                    case "THU":
+                        list.add(DayOfWeek.THURSDAY);
+                        break;
+                    case "FRI":
+                        list.add(DayOfWeek.FRIDAY);
+                        break;
+                    case "Sat":
+                        list.add(DayOfWeek.SATURDAY);
+                        break;
+                }
+                //list.set(i, DayOfWeek.valueOf(arr[i]));
+                //list.add(DayOfWeek.valueOf(arr[i]));
+            }
+        }
+
+
         for (Doctor Doc : doctors) {
-            if(Doc.getId() == DocID)
+            if(DocID==0){
+                Doc.DeleteDay(list);
+            }
+            else if(Doc.getId() == DocID)
                 Doc.DeleteDay(list);
         }
-        
-        
-        
-       
-       
-        
     }
-    
-    
-    
-    
-    
     public static void printAllDatabase() {
         doctors.forEach(doctor -> System.out.println(doctor));
         patients.forEach(patient -> System.out.println(patient));

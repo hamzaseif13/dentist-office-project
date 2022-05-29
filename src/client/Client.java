@@ -108,12 +108,11 @@ public class Client {
     {
         try {
                         
-            System.out.println("Enter Doctors's id :");
+            System.out.println("Enter Doctors's id that you want to delete his appointments:, enter 0 to delete for all doctors ");
             int doctorId = scanner.nextInt();
             scanner.nextLine();
             outputStream.writeInt(doctorId);
-            
-            System.out.println("enter patient's day appointment : ");
+            System.out.println("enter patient's day appointment : enter a 0 to delete for all days ");
             String appointmentDay = scanner.nextLine();
             outputStream.writeUTF(appointmentDay);
             
