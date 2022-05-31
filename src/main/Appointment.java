@@ -10,7 +10,7 @@ public class Appointment {
     private LocalTime startTime;
     private DayOfWeek day;
     
-
+//hahatest
     public Appointment(int patientID, LocalTime startTime, LocalTime endTime, DayOfWeek day) {
         this.patientID = patientID;
         this.endTime = endTime;
