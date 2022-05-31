@@ -29,9 +29,12 @@ public class Client {
             yesOrNo = "";
             System.out.println(inputStream.readUTF());
             int choice = -1;
-            while (choice != 5) {
+            while (choice != 6) {
                 System.out.println("what do you wanna do now ?");
-                System.out.println("1- add more doctors \n2- add more patients\n3- add appointments\n4- Delete an appointment\n5- leave the system");
+                System.out.println("1- add more doctors " +
+                        "\n2- add more patients\n3- add appointments" +
+                        "\n4- Delete an appointment\n5- print all system information\n" +
+                        "6- leave the system");
                 choice = scanner.nextInt();
                 scanner.nextLine();
                 switch (choice) {
@@ -51,18 +54,25 @@ public class Client {
                         outputStream.writeInt(4);
                         DeleteAppointment();
                         break;
-                    default:
+                    case 5:
                         outputStream.writeInt(5);
+                        print();
+                        break;
+                    default:
+                        outputStream.writeInt(6);
                 }
             }
-
-
+            System.out.println(inputStream.readUTF());
+            System.out.println(inputStream.readUTF());
+            System.out.println(inputStream.readUTF());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
     }
-
+    public static void print() throws IOException{
+        System.out.println(inputStream.readUTF());
+    }
     public static void addDoctors() {
         try {
             System.out.println("Enter a doctor Id");

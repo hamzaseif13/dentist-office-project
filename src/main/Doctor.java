@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 public class Doctor {
     private String name;
     private Week workingSchedule;
-    private final List<Appointment> appointments;
+    private  List<Appointment> appointments;
     public int getId() {
         return Id;
     }
@@ -56,18 +56,30 @@ public class Doctor {
     }
     public void DeleteDay(List<DayOfWeek> list)
     {
+       List <Appointment> newAppointments= new ArrayList<>();
+        List<Integer> arr= new ArrayList<>();
         for (DayOfWeek Day : list) {
-        for (Appointment App : appointments) {
-            if(Day == App.getDay())
+        for (int j=0;j<appointments.size();j++) {
+            if(Day == appointments.get(j).getDay())
             {
                 try {
-                    App.DeleteApp();
+                    Main.deletedPatientsIds.add(appointments.get(j).getPatientID());
+                    arr.add(j);
                 } catch (Throwable ex) {
                     Logger.getLogger(Doctor.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
         }
+
+        for(int j=0;j< appointments.size();j++){
+            for(var n:arr){
+                if(j!=n){
+                    newAppointments.add(appointments.get(j));
+                }
+            }
+        }
+        appointments= newAppointments;
     }
     private boolean checkIntersection(Appointment first,Appointment second){
         if(first.getDay()!=second.getDay()){

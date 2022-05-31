@@ -1,8 +1,6 @@
 package main;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.time.DayOfWeek;
@@ -16,6 +14,7 @@ public class Main {
     static ServerSocket server;
     static Socket receptions;
     static DataOutputStream outputStream;
+    static List<Integer> deletedPatientsIds= new ArrayList<>();
     static DataInputStream inputStream;
     static String yesOrNo;
     static List<Doctor> doctors = new ArrayList<Doctor>();
@@ -44,7 +43,7 @@ public class Main {
             addFakeData();
             outputStream.writeUTF(printAllDatabase());
             int choice=-1;
-            while (choice != 5) {
+            while (choice != 6) {
                  choice = inputStream.readInt();
                 switch (choice) {
                     case 1:
@@ -60,12 +59,56 @@ public class Main {
                     case 4:
                         DeleteAppointment();
                         break;
+                    case 5:
+                        outputStream.writeUTF(printAllDatabase());
+                        break;
+                    default:
+                        break;
+
                 }
             }
-            printAllDatabase();
+            outputStream.writeUTF(printAllDatabase());
+            outputStream.writeUTF(callDeletedPatients());
+            outputStream.writeUTF("all patients info was saved in a text file");
+            System.out.println("all patients info was saved in a text file");
+            file();
+
         } catch (Exception exception) {
             System.out.println(exception);
         }
+    }
+    public static void file(){
+        try {
+            File His = new File("His.txt");
+
+            if(!His.exists()) {
+                His.createNewFile();
+            }
+            PrintWriter pw = new PrintWriter(His);
+            for (Patient P : patients) {
+                pw.println("The Patient Name is : " + P.getName());
+                pw.println("The Patient ID is : " + P.getID());
+                pw.println("The Patient Phone number Is : " + P.getPhoneNumber());
+                pw.println("The Patient E-Mail Is : " + P.getEmail());
+            }
+            pw.close();
+            System.out.println("Done");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private static String callDeletedPatients() {
+        String x="";
+        for(int id : deletedPatientsIds){
+            for(Patient patient:patients){
+                if(patient.getID()==id){
+                    x+="calling : "+patient.getName()+" to tell him that his appointment was canceled\n";
+                }
+            }
+        }
+
+        System.out.println(x);
+        return x;
     }
 
 
@@ -136,20 +179,6 @@ public class Main {
 
     }
 
-/*
-* function checkInterSection(sec1, sec2) {
-  if (sec1.start == sec2.start) {
-    return true;
-  }
-  if (sec1.start < sec2.start) {
-    if (sec1.end > sec2.start) return true;
-    else if (sec1.end <= sec2.start) return false;
-  } else if (sec1.start > sec2.start) {
-    if (sec2.end > sec1.start) return true;
-    else if (sec2.end <= sec1.start) return false;
-  }
-}
-* */
     
     public static void DeleteAppointment() throws IOException
     {
@@ -188,7 +217,7 @@ public class Main {
                     case "FRI":
                         list.add(DayOfWeek.FRIDAY);
                         break;
-                    case "Sat":
+                    case "SAT":
                         list.add(DayOfWeek.SATURDAY);
                         break;
                 }
@@ -196,7 +225,6 @@ public class Main {
                 //list.add(DayOfWeek.valueOf(arr[i]));
             }
         }
-
 
         for (Doctor Doc : doctors) {
             if(DocID==0){

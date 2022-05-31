@@ -84,13 +84,13 @@ public class Patient {
 
     @Override
     public String toString() {
-        return "Patient{" +
+        return "\n-----------------------------\nPatient" +
                 "name='" + name + '\'' +
                 ", ID=" + ID +
                 ", phoneNumber=" + phoneNumber +
                 ", owedBalance=" + owedBalance +
                 ", totalPaid=" + totalPaid +
-                ", email='" + email + '\'' +
-                '}';
+                ", email='" + email + '\'' +"\n-----------------------------\n"
+                ;
     }
 }
