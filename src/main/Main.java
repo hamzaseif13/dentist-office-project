@@ -67,6 +67,7 @@ public class Main {
 
                 }
             }
+            //sending all info and deleted appointments info after the program finishes
             outputStream.writeUTF(printAllDatabase());
             outputStream.writeUTF(callDeletedPatients());
             outputStream.writeUTF("all patients info was saved in a text file");

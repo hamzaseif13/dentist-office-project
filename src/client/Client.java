@@ -62,6 +62,7 @@ public class Client {
                         outputStream.writeInt(6);
                 }
             }
+            //reciving all info and deleted info after the program finishes
             System.out.println(inputStream.readUTF());
             System.out.println(inputStream.readUTF());
             System.out.println(inputStream.readUTF());
